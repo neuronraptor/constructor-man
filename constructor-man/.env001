@@ -1,0 +1,6 @@
+DB_HOST = "localhost"
+DB_PORT = 5437
+DB_NAME = "cmandb"
+DB_USERNAME = "cmanuser"
+DB_PASSWORD = "_cm@nbas$wRd"
+

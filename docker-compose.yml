@@ -1,0 +1,15 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5440:5432"
+    environment:
+      POSTGRES_DB: cmandb
+      POSTGRES_USER: cmanuser
+      POSTGRES_PASSWORD: J7gFp2qL9sR4wD6x
+      POSTGRES_ENCODING: UTF8
+      POSTGRES_LOCALE: ru_RU.UTF-8
+    volumes:
+      - /e:/data/docker/postgres_data/001
+      - ./init-scripts:/docker-entrypoint-initdb.d
