@@ -11,11 +11,11 @@ import { MechExceptionFilter } from 'src/common-error/MechExceptionFilter';
   exports: [MechProductService],
   controllers: [MechProductController],
   providers: [
-    MechProductService
+    MechProductService,
     // , {
     //   provide: APP_FILTER,
     //   useClass: MechExceptionFilter
     // }
   ],
 })
-export class MechProductModule { }
+export class MechProductModule {}

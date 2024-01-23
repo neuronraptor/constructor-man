@@ -11,4 +11,4 @@ import { MechTypeModule } from 'src/mech_type/mech_type.module';
   controllers: [MechComponentController],
   providers: [MechComponentService],
 })
-export class MechComponentModule { }
+export class MechComponentModule {}

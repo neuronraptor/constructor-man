@@ -11,13 +11,16 @@ import { MechExceptionFilter } from 'src/common-error/MechExceptionFilter';
 @Module({
   imports: [
     TypeOrmModule.forFeature([MechProductComponent]),
-    MechProductModule, MechComponentModule],
+    MechProductModule,
+    MechComponentModule,
+  ],
   controllers: [MechProductComponentsController],
-  providers: [MechProductComponentsService,
+  providers: [
+    MechProductComponentsService,
     // {
     //   provide: APP_FILTER,
     //   useClass: MechExceptionFilter
     // }
   ],
 })
-export class MechProductComponentsModule { }
+export class MechProductComponentsModule {}

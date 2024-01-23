@@ -6,17 +6,17 @@ import { MechComponent } from './entities/mech_component.entity';
 import { Repository } from 'typeorm';
 import { MechTypeService } from 'src/mech_type/mech_type.service';
 import { MechException } from 'src/common-error/MechException';
+import { assertNotNullUndefined } from 'src/common-util/assertions';
 
 @Injectable()
 export class MechComponentService {
-
   constructor(
-    @InjectRepository(MechComponent) private repository: Repository<MechComponent>,
-    private mechTypeService: MechTypeService) {
-  }
+    @InjectRepository(MechComponent)
+    private repository: Repository<MechComponent>,
+    private mechTypeService: MechTypeService,
+  ) {}
 
   async create(dto: CreateMechComponentDto): Promise<MechComponent> {
-
     await this.assertIsValid(dto);
 
     await this.assertNotExist(dto);
@@ -27,9 +27,7 @@ export class MechComponentService {
     e.serialNumber = dto.serialNumber;
     e.type = await this.mechTypeService.findOrNull(dto.typeId);
 
-    if (!e.type) {
-      throw new MechException(`Requested component type with id=${dto.typeId} not found`);
-    }
+    assertNotNullUndefined(e.type, `Requested component type with id=${dto.typeId} not found`);
 
     // e.title = dto.title;
     // e.description = dto.description;
@@ -38,17 +36,9 @@ export class MechComponentService {
   }
 
   assertIsValid(dto: CreateMechComponentDto) {
-    if (!dto) {
-      throw new MechException("Request cannot be an empty object");
-    }
-
-    if (!dto.typeId) {
-      throw new MechException("Requested component typeId must be specified");
-    }
-
-    if (!dto.serialNumber) {
-      throw new MechException("Requested component serialNumber must be specified");
-    }
+    assertNotNullUndefined(dto, 'Request cannot be an empty object');
+    assertNotNullUndefined(dto.typeId, 'Requested component typeId must be specified');
+    assertNotNullUndefined(dto.serialNumber, 'Requested component serialNumber must be specified');
   }
 
   async update(id: number, dto: UpdateMechComponentDto) {
@@ -67,7 +57,9 @@ export class MechComponentService {
   async assertNotExist(dto: CreateMechComponentDto) {
     if (dto.serialNumber && dto.serialNumber !== undefined) {
       if (await this.repository.findOneBy({ serialNumber: dto.serialNumber })) {
-        throw new MechException(`Component with serialNumber [${dto.serialNumber}] already exists`);
+        throw new MechException(
+          `Component with serialNumber [${dto.serialNumber}] already exists`,
+        );
       }
     }
   }
@@ -75,8 +67,8 @@ export class MechComponentService {
   findAll(): Promise<MechComponent[]> {
     return this.repository.find({
       relations: {
-        type: true
-      }
+        type: true,
+      },
     });
   }
 
@@ -87,5 +79,4 @@ export class MechComponentService {
   remove(id: number) {
     return this.repository.delete({ id });
   }
-
 }

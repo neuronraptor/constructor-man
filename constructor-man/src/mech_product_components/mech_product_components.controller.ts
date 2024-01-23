@@ -5,9 +5,14 @@ import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('mech-product-components')
 export class MechProductComponentsController {
-  constructor(private readonly mechProductComponentsService: MechProductComponentsService) { }
+  constructor(
+    private readonly mechProductComponentsService: MechProductComponentsService,
+  ) {}
 
-  @ApiOperation({ description: 'Install a component into another Holder component inside a Product. This operation create a link of this entities' })
+  @ApiOperation({
+    description:
+      'Install a component into another Holder component inside a Product. This operation create a link of this entities',
+  })
   @Post()
   create(@Body() dto: CreateMechProductComponentDto) {
     return this.mechProductComponentsService.create(dto);
@@ -22,10 +27,14 @@ export class MechProductComponentsController {
   @ApiOperation({ description: 'Return Product Component Links' })
   @Get(':productId/tree')
   findProductComponentTree(@Param('productId') productId: number) {
-    return this.mechProductComponentsService.findProductComponentTree(productId);
+    return this.mechProductComponentsService.findProductComponentTree(
+      productId,
+    );
   }
 
-  @ApiOperation({ description: 'Return Component - Product Link information by it\'s ID' })
+  @ApiOperation({
+    description: "Return Component - Product Link information by it's ID",
+  })
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.mechProductComponentsService.findOne(+id);
@@ -35,5 +44,4 @@ export class MechProductComponentsController {
   remove(@Param('id') id: string) {
     return this.mechProductComponentsService.remove(+id);
   }
-
 }

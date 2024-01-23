@@ -13,3 +13,11 @@ services:
     volumes:
       - /e:/data/docker/postgres_data/001
       - ./init-scripts:/docker-entrypoint-initdb.d
+
+  constructor-man:
+    build: E:/works/ts/ts002/constructor-man
+    command: npm run start:dev
+    volumes:
+      - E:/works/ts/ts002/constructor-man:/app
+    depends_on:
+      - postgres

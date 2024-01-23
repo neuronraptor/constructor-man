@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseFilters } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseFilters,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { MechException } from 'src/common-error/MechException';
 import { MechExceptionFilter } from 'src/common-error/MechExceptionFilter';
@@ -10,12 +19,11 @@ import { MechProductService } from './mech_product.service';
 // @UseFilters(MechExceptionFilter)
 @Controller('mech-product')
 export class MechProductController {
-  constructor(private readonly mechProductService: MechProductService) { }
+  constructor(private readonly mechProductService: MechProductService) {}
 
   @ApiOperation({ summary: 'Create MechProduct object' })
   @Post()
   async create(@Body() dto: CreateMechProductDto) {
-
     await this.assertValidDto(dto);
 
     try {
@@ -27,10 +35,10 @@ export class MechProductController {
 
   async assertValidDto(dto: CreateMechProductDto) {
     if (!dto.code || dto.code == undefined) {
-      throw new MechException('Product code must be specified')
+      throw new MechException('Product code must be specified');
     }
     if (!dto.title || dto.title == undefined) {
-      throw new MechException('Product title must be specified')
+      throw new MechException('Product title must be specified');
     }
   }
 
@@ -48,7 +56,10 @@ export class MechProductController {
 
   @ApiOperation({ summary: 'Update MechProduct object with specified id' })
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMechProductDto: UpdateMechProductDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateMechProductDto: UpdateMechProductDto,
+  ) {
     return this.mechProductService.update(+id, updateMechProductDto);
   }
 

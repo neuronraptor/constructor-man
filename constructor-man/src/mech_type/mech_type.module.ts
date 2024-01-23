@@ -10,4 +10,4 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   controllers: [MechTypeController],
   providers: [MechTypeService],
 })
-export class MechTypeModule { }
+export class MechTypeModule {}

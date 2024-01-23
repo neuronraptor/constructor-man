@@ -8,12 +8,11 @@ import { MechException } from 'src/common-error/MechException';
 
 @Injectable()
 export class MechTypeService {
-
-  constructor(@InjectRepository(MechType) private repository: Repository<MechType>) {
-  }
+  constructor(
+    @InjectRepository(MechType) private repository: Repository<MechType>,
+  ) {}
 
   async create(dto: CreateMechTypeDto) {
-
     await this.assertNotExist(dto);
 
     const e = new MechType();
@@ -24,28 +23,40 @@ export class MechTypeService {
     if (dto.parentId) {
       e.parent = await this.findOrNull(dto.parentId);
       if (!e.parent) {
-        throw new MechException(`Parent type with id=${dto.parentId} not found`)
+        throw new MechException(
+          `Parent type with id=${dto.parentId} not found`,
+        );
       }
     }
 
     try {
       return this.repository.save(e);
     } catch (err) {
-      throw new MechException(err.message)
+      throw new MechException(err.message);
     }
   }
 
   async assertNotExist(dto: CreateMechTypeDto) {
-    if (dto.code && await this.repository.findOne({ where: { code: dto.code } })) {
-      throw new MechException(`Type with code=${dto.code} already exists`)
+    if (
+      dto.code &&
+      (await this.repository.findOne({ where: { code: dto.code } }))
+    ) {
+      throw new MechException(`Type with code=${dto.code} already exists`);
     }
 
-    if (await this.repository.findOne({ where: { partNumber: dto.partNumber } })) {
-      throw new MechException(`Type with partNumber=${dto.partNumber} already exists`)
+    if (
+      await this.repository.findOne({ where: { partNumber: dto.partNumber } })
+    ) {
+      throw new MechException(
+        `Type with partNumber=${dto.partNumber} already exists`,
+      );
     }
 
-    if (dto.title && await this.repository.findOne({ where: { title: dto.title } })) {
-      throw new MechException(`Type with title=${dto.title} already exists`)
+    if (
+      dto.title &&
+      (await this.repository.findOne({ where: { title: dto.title } }))
+    ) {
+      throw new MechException(`Type with title=${dto.title} already exists`);
     }
   }
 
@@ -65,7 +76,7 @@ export class MechTypeService {
 
   async findOrNull(id: number): Promise<MechType> {
     if (id != null && id !== undefined) {
-      return this.findOne(id)
+      return this.findOne(id);
     }
     return new Promise((resolve, reject) => null);
   }
@@ -81,5 +92,4 @@ export class MechTypeService {
   remove(id: number): Promise<DeleteResult> {
     return this.repository.delete(id);
   }
-
 }

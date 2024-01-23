@@ -28,12 +28,17 @@ import { MechComponent } from './mech_component/entities/mech_component.entity';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         entities: [MechType, MechComponent, MechProduct, MechProductComponent],
-        synchronize: true
+        synchronize: true,
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
-    CommonEntityModule, MechTypeModule, MechComponentModule, MechProductModule, MechProductComponentsModule],
+    CommonEntityModule,
+    MechTypeModule,
+    MechComponentModule,
+    MechProductModule,
+    MechProductComponentsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

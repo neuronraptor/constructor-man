@@ -8,8 +8,9 @@ import { MechException } from 'src/common-error/MechException';
 
 @Injectable()
 export class MechProductService {
-
-  constructor(@InjectRepository(MechProduct) private repository: Repository<MechProduct>) { }
+  constructor(
+    @InjectRepository(MechProduct) private repository: Repository<MechProduct>,
+  ) {}
 
   async create(dto: CreateMechProductDto): Promise<MechProduct> {
     await this.assertNotExist(dto);
@@ -24,7 +25,7 @@ export class MechProductService {
 
   private async assertNotExist(dto: CreateMechProductDto) {
     if (dto.code && dto.code !== undefined) {
-      let e = await this.repository.findOneBy({ code: dto.code });
+      const e = await this.repository.findOneBy({ code: dto.code });
       if (e) {
         throw new MechException(`Product with code ${dto.code} already exists`);
       }
@@ -40,7 +41,7 @@ export class MechProductService {
   }
 
   async update(id: number, dto: UpdateMechProductDto) {
-    let e = await this.findOne(id);
+    const e = await this.findOne(id);
     if (e && e !== undefined) {
       e.title = dto.title;
       e.code = dto.code;
@@ -55,6 +56,4 @@ export class MechProductService {
   remove(id: number) {
     return this.repository.delete(id);
   }
-
 }
-

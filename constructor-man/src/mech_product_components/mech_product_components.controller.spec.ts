@@ -8,12 +8,14 @@ describe('MechProductComponentsController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports:[MechComponentModule],
+      imports: [MechComponentModule],
       controllers: [MechProductComponentsController],
       providers: [MechProductComponentsService],
     }).compile();
 
-    controller = module.get<MechProductComponentsController>(MechProductComponentsController);
+    controller = module.get<MechProductComponentsController>(
+      MechProductComponentsController,
+    );
   });
 
   it('should be defined', () => {
