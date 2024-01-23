@@ -15,9 +15,10 @@ services:
       - ./init-scripts:/docker-entrypoint-initdb.d
 
   constructor-man:
-    build: E:/works/ts/ts002/constructor-man
+    # build: E:/works/ts/ts002/constructor-man
+    build: ./constructor-man
     command: npm run start:dev
     volumes:
-      - E:/works/ts/ts002/constructor-man:/app
+      - ./constructor-man:/app
     depends_on:
       - postgres
