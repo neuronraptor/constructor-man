@@ -22,3 +22,5 @@ services:
       - ./constructor-man:/app
     depends_on:
       - postgres
+    ports:
+      - "3000:3000"
